@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useReducer } from "react";
 import TabsManager from "./TabsManager";
 import TaskStructure from "../../data/tasksStructure";
 
