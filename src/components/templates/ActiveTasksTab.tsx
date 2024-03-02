@@ -1,44 +1,21 @@
-import { ChangeEvent, FormEvent } from "react";
+import { Dispatch } from "react";
 import TaskStructure from "../../data/tasksStructure";
 import CreateTaskForm from "../molecules/CreateTaskForm";
 import Tasks from "../organisms/Tasks";
+import { ACTION, State } from "./TasksManager";
 
 interface Props {
-  newTaskName: string;
   tasks: TaskStructure[];
-  sliderValue: number;
-  handleCompletedTask: (taskId: string) => void;
-  handleDeleteTask: (taskId: string) => void;
-  handleInputChange: (e: ChangeEvent) => void;
-  handleCreateTask: (e: FormEvent) => void;
-  handleSliderChange: (e: Event, newValue: number | number[]) => void;
+  state: State;
+  dispatch: Dispatch<ACTION>;
 }
 
-const ActiveTasksTab = ({
-  newTaskName,
-  tasks,
-  sliderValue,
-  handleCompletedTask,
-  handleDeleteTask,
-  handleInputChange,
-  handleCreateTask,
-  handleSliderChange,
-}: Props) => {
+const ActiveTasksTab = ({ tasks, state, dispatch }: Props) => {
   return (
     <>
-      <CreateTaskForm
-        value={newTaskName}
-        sliderValue={sliderValue}
-        handleInputChange={handleInputChange}
-        handleCreateTask={handleCreateTask}
-        handleSliderChange={handleSliderChange}
-      />
+      <CreateTaskForm state={state} dispatch={dispatch} />
       {tasks.length > 0 ? (
-        <Tasks
-          tasks={tasks}
-          handleCompletedTask={handleCompletedTask}
-          handleDeleteTask={handleDeleteTask}
-        />
+        <Tasks tasks={tasks} dispatch={dispatch} />
       ) : (
         <h2>No active tasks yet!</h2>
       )}

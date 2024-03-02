@@ -1,32 +1,23 @@
-import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
+import { Dispatch, SyntheticEvent, useState } from "react";
 import ActiveTasksTab from "./ActiveTasksTab";
 import CompletedTasksTab from "./CompletedTasksTab";
 import { Tab, Tabs } from "@mui/material";
 import TabPanel from "./TabPanel";
 import TaskStructure from "../../data/tasksStructure";
+import { ACTION, State } from "./TasksManager";
 
 interface Props {
-  newTaskName: string;
-  sliderValue: number;
   completedTasks: TaskStructure[];
   activeTasks: TaskStructure[];
-  handleDeleteTask: (taskId: string) => void;
-  handleCompletedTask: (taskId: string) => void;
-  handleInputChange: (e: ChangeEvent) => void;
-  handleCreateTask: (e: FormEvent) => void;
-  handleSliderChange: (e: Event, newValue: number | number[]) => void;
+  dispatch: Dispatch<ACTION>;
+  state: State;
 }
 
 const TabsManager = ({
-  newTaskName,
   completedTasks,
   activeTasks,
-  sliderValue,
-  handleDeleteTask,
-  handleCompletedTask,
-  handleInputChange,
-  handleCreateTask,
-  handleSliderChange,
+  dispatch,
+  state,
 }: Props) => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,23 +39,10 @@ const TabsManager = ({
         <Tab label="Completed Tasks" />
       </Tabs>
       <TabPanel value={0} index={currentTab} isLoading={isLoading}>
-        <ActiveTasksTab
-          tasks={activeTasks}
-          sliderValue={sliderValue}
-          newTaskName={newTaskName}
-          handleCompletedTask={handleCompletedTask}
-          handleDeleteTask={handleDeleteTask}
-          handleInputChange={handleInputChange}
-          handleCreateTask={handleCreateTask}
-          handleSliderChange={handleSliderChange}
-        />
+        <ActiveTasksTab tasks={activeTasks} state={state} dispatch={dispatch} />
       </TabPanel>
       <TabPanel value={1} index={currentTab} isLoading={isLoading}>
-        <CompletedTasksTab
-          tasks={completedTasks}
-          handleCompletedTask={handleCompletedTask}
-          handleDeleteTask={handleDeleteTask}
-        />
+        <CompletedTasksTab tasks={completedTasks} dispatch={dispatch} />
       </TabPanel>
     </>
   );

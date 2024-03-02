@@ -1,66 +1,77 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useReducer } from "react";
 import TabsManager from "./TabsManager";
 import TaskStructure from "../../data/tasksStructure";
 
-const TasksManager = () => {
-  const [allTasks, setAllTasks] = useState<TaskStructure[]>([]);
-  const [newTaskName, setNewTaskName] = useState("");
-  const [newTaskPriority, setNewTaskPriority] = useState(0);
+export interface State {
+  allTasks: TaskStructure[];
+  newTaskName: string;
+}
 
-  const completedTasks: TaskStructure[] = allTasks.filter(
+export type ACTION =
+  | { type: "add" }
+  | { type: "remove"; id: string }
+  | { type: "updateName"; title: string }
+  | { type: "updateStatus"; id: string };
+
+function reducer(state: State, action: ACTION) {
+  const { type } = action;
+
+  switch (type) {
+    case "add":
+      return {
+        ...state,
+        allTasks: [
+          ...state.allTasks,
+          {
+            id: crypto.randomUUID(),
+            title: state.newTaskName,
+            isCompleted: false,
+          },
+        ],
+        newTaskName: "",
+      };
+    case "remove":
+      return {
+        ...state,
+        allTasks: state.allTasks.filter((task) => action.id != task.id),
+      };
+    case "updateName":
+      return { ...state, newTaskName: action.title };
+    case "updateStatus":
+      return {
+        ...state,
+        allTasks: state.allTasks.map((task) => {
+          if (task.id == action.id) {
+            return { ...task, isCompleted: !task.isCompleted };
+          }
+          return task;
+        }),
+      };
+    default:
+      return state;
+  }
+}
+
+const TasksManager = () => {
+  const [state, dispatch] = useReducer(reducer, {
+    allTasks: [],
+    newTaskName: "",
+  });
+
+  const completedTasks: TaskStructure[] = state.allTasks.filter(
     (task) => task.isCompleted
   );
-  const activeTasks: TaskStructure[] = allTasks
-    .filter((task) => !task.isCompleted)
-    .sort((task1, task2) => (task1.priority > task2.priority ? 1 : -1));
-
-  const handleDeleteTask = (taskId: string) => {
-    setAllTasks(allTasks.filter((task) => taskId != task.id));
-  };
-  const handleCompletedTask = (taskId: string) => {
-    const updatedTasks: TaskStructure[] = allTasks.map((task) => {
-      if (task.id == taskId) {
-        return { ...task, isCompleted: !task.isCompleted };
-      }
-      return task;
-    });
-    setAllTasks(updatedTasks);
-  };
-
-  const handleInputChange = (e: ChangeEvent) => {
-    const currentTarget = e.currentTarget as HTMLInputElement;
-    setNewTaskName(currentTarget.value);
-  };
-  const handleSliderChange = (e: Event, newValue: number | number[]) => {
-    setNewTaskPriority(newValue as number);
-  };
-
-  const handleCreateTask = (e: FormEvent) => {
-    e.preventDefault();
-    setAllTasks([
-      ...allTasks,
-      {
-        id: crypto.randomUUID(),
-        title: newTaskName,
-        isCompleted: false,
-        priority: newTaskPriority,
-      },
-    ]);
-    setNewTaskName("");
-  };
+  const activeTasks: TaskStructure[] = state.allTasks.filter(
+    (task) => !task.isCompleted
+  );
 
   return (
     <>
       <TabsManager
-        newTaskName={newTaskName}
         completedTasks={completedTasks}
-        sliderValue={newTaskPriority}
         activeTasks={activeTasks}
-        handleDeleteTask={handleDeleteTask}
-        handleCompletedTask={handleCompletedTask}
-        handleInputChange={handleInputChange}
-        handleCreateTask={handleCreateTask}
-        handleSliderChange={handleSliderChange}
+        state={state}
+        dispatch={dispatch}
       />
     </>
   );

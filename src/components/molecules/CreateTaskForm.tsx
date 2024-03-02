@@ -1,46 +1,38 @@
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, Dispatch } from "react";
 import CreateButton from "../atoms/Buttons/CreateButton";
 import InputField from "../atoms/InputField";
-import { Slider } from "@mui/material";
+import { ACTION, State } from "../templates/TasksManager";
 
 interface Props {
-  value: string;
-  sliderValue: number;
-  handleInputChange: (e: ChangeEvent) => void;
-  handleCreateTask: (e: FormEvent) => void;
-  handleSliderChange: (e: Event, newValue: number | number[]) => void;
+  state: State;
+  dispatch: Dispatch<ACTION>;
 }
 
-const CreateTaskForm = ({
-  value,
-  sliderValue,
-  handleInputChange,
-  handleCreateTask,
-  handleSliderChange,
-}: Props) => {
+const CreateTaskForm = ({ state, dispatch }: Props) => {
+  const handleInputChange = (e: ChangeEvent) => {
+    const currentTarget = e.currentTarget as HTMLInputElement;
+    dispatch({
+      type: "updateName",
+      title: currentTarget.value,
+    });
+  };
+  const handleCreateTask = () => {
+    dispatch({
+      type: "add",
+    });
+  };
+
   return (
     <form className="flex">
       <InputField
         name="create-task-field"
         placeholder="Create a task..."
-        value={value}
+        value={state.newTaskName}
         onChange={handleInputChange}
-      />
-      <Slider
-        value={sliderValue}
-        onChange={(e: Event, newValue: number | number[]) => {
-          handleSliderChange(e, newValue as number);
-        }}
-        valueLabelDisplay="auto"
-        min={0}
-        max={10}
-        shiftStep={1}
-        marks
-        style={{ width: "15em" }}
       />
       <CreateButton
         name="Create Task"
-        disabled={value.length == 0}
+        disabled={state.newTaskName.length == 0}
         onClick={handleCreateTask}
       />
     </form>

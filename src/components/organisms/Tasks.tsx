@@ -1,13 +1,28 @@
+import { Dispatch } from "react";
 import TaskStructure from "../../data/tasksStructure";
 import Task from "../molecules/Task";
+import { ACTION } from "../templates/TasksManager";
 
 interface Props {
   tasks: TaskStructure[];
-  handleCompletedTask: (taskId: string) => void;
-  handleDeleteTask: (taskId: string) => void;
+  dispatch: Dispatch<ACTION>;
 }
 
-const Tasks = ({ tasks, handleCompletedTask, handleDeleteTask }: Props) => {
+const Tasks = ({ tasks, dispatch }: Props) => {
+  const handleCompleteTask = (taskId: string) => {
+    dispatch({
+      type: "updateStatus",
+      id: taskId,
+    });
+  };
+
+  const handleDeleteTask = (taskId: string) => {
+    dispatch({
+      type: "remove",
+      id: taskId,
+    });
+  };
+
   return (
     <ul>
       {tasks.map((task) => {
@@ -15,10 +30,9 @@ const Tasks = ({ tasks, handleCompletedTask, handleDeleteTask }: Props) => {
           <Task
             key={task.id}
             title={task.title}
-            priority={task.priority}
             isCompleted={task.isCompleted}
             handleCompleteTask={() => {
-              handleCompletedTask(task.id);
+              handleCompleteTask(task.id);
             }}
             handleDeleteTask={() => {
               handleDeleteTask(task.id);
