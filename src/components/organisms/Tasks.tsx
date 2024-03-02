@@ -15,7 +15,6 @@ const Tasks = ({ tasks, handleCompletedTask, handleDeleteTask }: Props) => {
           <Task
             key={task.id}
             title={task.title}
-            priority={task.priority}
             isCompleted={task.isCompleted}
             handleCompleteTask={() => {
               handleCompletedTask(task.id);

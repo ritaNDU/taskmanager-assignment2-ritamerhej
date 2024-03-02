@@ -7,26 +7,22 @@ import TaskStructure from "../../data/tasksStructure";
 
 interface Props {
   newTaskName: string;
-  sliderValue: number;
   completedTasks: TaskStructure[];
   activeTasks: TaskStructure[];
   handleDeleteTask: (taskId: string) => void;
   handleCompletedTask: (taskId: string) => void;
   handleInputChange: (e: ChangeEvent) => void;
   handleCreateTask: (e: FormEvent) => void;
-  handleSliderChange: (e: Event, newValue: number | number[]) => void;
 }
 
 const TabsManager = ({
   newTaskName,
   completedTasks,
   activeTasks,
-  sliderValue,
   handleDeleteTask,
   handleCompletedTask,
   handleInputChange,
   handleCreateTask,
-  handleSliderChange,
 }: Props) => {
   const [currentTab, setCurrentTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,13 +46,11 @@ const TabsManager = ({
       <TabPanel value={0} index={currentTab} isLoading={isLoading}>
         <ActiveTasksTab
           tasks={activeTasks}
-          sliderValue={sliderValue}
           newTaskName={newTaskName}
           handleCompletedTask={handleCompletedTask}
           handleDeleteTask={handleDeleteTask}
           handleInputChange={handleInputChange}
           handleCreateTask={handleCreateTask}
-          handleSliderChange={handleSliderChange}
         />
       </TabPanel>
       <TabPanel value={1} index={currentTab} isLoading={isLoading}>
