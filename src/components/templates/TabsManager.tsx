@@ -29,11 +29,12 @@ const TabsManager = ({
         onChange={(e: SyntheticEvent, newIndex: number) => {
           setCurrentTab(newIndex);
           setIsLoading(true);
-          setTimeout(() => setIsLoading(false), 1000);
+          setTimeout(() => setIsLoading(false), 2000);
         }}
         variant="scrollable"
         scrollButtons={false}
         aria-label="scrollable prevent tabs example"
+        color="green"
       >
         <Tab label="Active Tasks" />
         <Tab label="Completed Tasks" />

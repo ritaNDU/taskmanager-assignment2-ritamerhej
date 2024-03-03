@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import TabsManager from "./TabsManager";
 import TaskStructure from "../../data/tasksStructure";
+import TasksCounter from "../organisms/TasksCounter";
 
 export interface State {
   allTasks: TaskStructure[];
@@ -66,14 +67,19 @@ const TasksManager = () => {
   );
 
   return (
-    <>
+    <div className="p-10 w-screen">
+      <div className="flex gap-3 mb-8">
+        <TasksCounter name="Active" tasksCount={activeTasks.length} />
+        <TasksCounter name="Complete" tasksCount={completedTasks.length} />
+      </div>
+      <h2 className="text-xl font-semibold">Tasks Overview</h2>
       <TabsManager
         completedTasks={completedTasks}
         activeTasks={activeTasks}
         state={state}
         dispatch={dispatch}
       />
-    </>
+    </div>
   );
 };
 

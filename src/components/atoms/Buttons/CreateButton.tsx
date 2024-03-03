@@ -9,7 +9,16 @@ interface Props {
 
 const CreateButton = ({ name, disabled, onClick }: Props) => {
   return (
-    <Button onClick={onClick} disabled={disabled} role="submit">
+    <Button
+      onClick={onClick}
+      disabled={disabled}
+      variant="contained"
+      color="secondary"
+      role="submit"
+      sx={{
+        borderRadius: "40px",
+      }}
+    >
       {name}
     </Button>
   );

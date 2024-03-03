@@ -23,7 +23,7 @@ const CreateTaskForm = ({ state, dispatch }: Props) => {
   };
 
   return (
-    <form className="flex">
+    <form className="flex flex-col gap-2 lg:flex-row" method="post">
       <InputField
         name="create-task-field"
         placeholder="Create a task..."
@@ -31,7 +31,7 @@ const CreateTaskForm = ({ state, dispatch }: Props) => {
         onChange={handleInputChange}
       />
       <CreateButton
-        name="Create Task"
+        name="Create"
         disabled={state.newTaskName.length == 0}
         onClick={handleCreateTask}
       />
