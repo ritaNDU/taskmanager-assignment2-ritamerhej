@@ -22,19 +22,20 @@ const TabsManager = ({
   const [currentTab, setCurrentTab] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleChange = (e: SyntheticEvent, newIndex: number) => {
+    setCurrentTab(newIndex);
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 2000);
+  };
+
   return (
     <>
       <Tabs
         value={currentTab}
-        onChange={(e: SyntheticEvent, newIndex: number) => {
-          setCurrentTab(newIndex);
-          setIsLoading(true);
-          setTimeout(() => setIsLoading(false), 2000);
-        }}
+        onChange={handleChange}
         variant="scrollable"
         scrollButtons={false}
         aria-label="scrollable prevent tabs example"
-        color="green"
       >
         <Tab label="Active Tasks" />
         <Tab label="Completed Tasks" />
