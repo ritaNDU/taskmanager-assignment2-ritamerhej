@@ -8,6 +8,8 @@ interface Props {
 const DeleteButton = ({ name, onClick }: Props) => {
   return (
     <Button
+      variant="text"
+      size="medium"
       onClick={() => {
         onClick();
       }}

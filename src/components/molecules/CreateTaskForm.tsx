@@ -1,29 +1,38 @@
-import { ChangeEvent, FormEvent } from "react";
+import { ChangeEvent, Dispatch } from "react";
 import CreateButton from "../atoms/Buttons/CreateButton";
 import InputField from "../atoms/InputField";
+import { ACTION, State } from "../templates/TasksManager";
 
 interface Props {
-  value: string;
-  handleInputChange: (e: ChangeEvent) => void;
-  handleCreateTask: (e: FormEvent) => void;
+  state: State;
+  dispatch: Dispatch<ACTION>;
 }
 
-const CreateTaskForm = ({
-  value,
-  handleInputChange,
-  handleCreateTask,
-}: Props) => {
+const CreateTaskForm = ({ state, dispatch }: Props) => {
+  const handleInputChange = (e: ChangeEvent) => {
+    const currentTarget = e.currentTarget as HTMLInputElement;
+    dispatch({
+      type: "updateName",
+      title: currentTarget.value,
+    });
+  };
+  const handleCreateTask = () => {
+    dispatch({
+      type: "add",
+    });
+  };
+
   return (
-    <form className="flex">
+    <form className="flex flex-col gap-2 lg:flex-row" method="post">
       <InputField
         name="create-task-field"
         placeholder="Create a task..."
-        value={value}
+        value={state.newTaskName}
         onChange={handleInputChange}
       />
       <CreateButton
-        name="Create Task"
-        disabled={value.length == 0}
+        name="Create"
+        disabled={state.newTaskName.length == 0}
         onClick={handleCreateTask}
       />
     </form>

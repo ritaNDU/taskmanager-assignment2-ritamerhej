@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import "./TabPanel.css";
 
 interface Props {
   children: ReactNode;
@@ -8,9 +9,14 @@ interface Props {
 }
 
 const TabPanel = ({ children, value, index, isLoading }: Props) => {
+  const className = isLoading ? "h-full flex justify-center" : "";
   return (
-    <div hidden={index !== value}>
-      {isLoading ? "Loading" : <div>{children}</div>}
+    <div className={className}>
+      {isLoading ? (
+        <div hidden={index !== value} className="spinner"></div>
+      ) : (
+        <div hidden={index !== value}>{children}</div>
+      )}
     </div>
   );
 };

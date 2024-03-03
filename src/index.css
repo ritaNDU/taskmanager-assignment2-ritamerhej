@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.logo p {
+  margin-top: -8px;
+  font-size: 0.8em;
+  letter-spacing: -0.5px;
+  word-spacing: -0.2px;
+}
+
+.logo h1 {
+  letter-spacing: 1px;
+}

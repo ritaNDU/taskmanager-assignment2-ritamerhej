@@ -9,6 +9,7 @@ const CheckboxField = ({ checked, onChange }: Props) => {
   return (
     <Checkbox
       checked={checked}
+      color="primary"
       onChange={() => {
         onChange();
       }}
