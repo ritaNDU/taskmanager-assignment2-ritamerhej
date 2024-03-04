@@ -2,10 +2,10 @@
 
 ## Description
 
-Planify is a web application, developped with React, that helps you organise your day to day tasks.
+Planify is a web application, developed with React, that helps you organise your day to day tasks.
 It lets you create new tasks and check each out as you complete it.
 To start your day the right way, use Planify!
-For a live demo, follow this link: [title](https://ritandu.github.io/taskmanager-assignment2-ritamerhej/)
+For a live demo, follow this link: [Planify: The demo](https://ritandu.github.io/taskmanager-assignment2-ritamerhej/)
 
 ## How to run the code
 
