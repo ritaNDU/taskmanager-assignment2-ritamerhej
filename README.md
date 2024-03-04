@@ -24,11 +24,11 @@ Finally I added the styles.
 
 ## Challenges Faced
 
-1. State Management
+1. **State Management**:
    State management was hell. I had 2 pieces of state that had to be changed throughout the components, but they were managed by the top component. So I found myself passing state and all the handlers I had to deeply nested components.
    Therefore, I decided to re-write the logic using useReducer. It solved my problem as I just had to pass the state and the dispatch function wherever needed only.
 
-2. Coming up with the design
+2. **Coming up with the design**:
    I'm not a designer, so I found this really hard.
    I googled some things up and tried to find designs I liked to get inspiration.
    At the end, I came up with the current design. I received good feedback about it, but I still don't think I got it right.
