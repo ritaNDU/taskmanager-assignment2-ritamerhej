@@ -36,7 +36,7 @@ Finally I added the styles.
 ## Folder Structure
 
 The code is all located in the src/ folder.
-###The src/ folder:
+### The src/ folder:
 It is divided into the components/ folder, the features/ folder and the data/ folder.
 
 ### The components/ folder:
